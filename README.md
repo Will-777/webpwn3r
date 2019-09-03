@@ -1,4 +1,4 @@
-webpwn3r
+webpwn3r (python3)
 ========
 
 WebPwn3r - Web Applications Security Scanner.
