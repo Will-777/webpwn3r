@@ -3,10 +3,10 @@
 # By Ebrahim Hegazy - twitter.com/zigoo0
 # First demo conducted 12Apr-2014 @OWASP Chapter Egypt
 # https://www.owasp.org/index.php/Cairo
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 import time
-from urllib import FancyURLopener
+from urllib.request import FancyURLopener
 
 class colors:
         def __init__(self):
@@ -29,21 +29,21 @@ class HTTP_HEADER:
 
 def headers_reader(url):
 	# This function will print the server headers such as WebServer OS & Version.
-	print ga.bold+" \n [!] Fingerprinting the backend Technologies."+ga.end
-	opener = urllib.urlopen(url)
+	print(ga.bold+" \n [!] Fingerprinting the backend Technologies."+ga.end)
+	opener = urllib.request.urlopen(url)
 	if opener.code == 200:
-		 print ga.green+" [!] Status code: 200 OK"+ga.end
+		 print(ga.green+" [!] Status code: 200 OK"+ga.end)
 	if opener.code == 404:
-		 print ga.red+" [!] Page was not found! Please check the URL \n"+ga.end
+		 print(ga.red+" [!] Page was not found! Please check the URL \n"+ga.end)
 		 exit()
 	#Host = opener.headers.get(HTTP_HEADER.HOST)
 	Server = opener.headers.get(HTTP_HEADER.SERVER)
 	# HOST will split the HostName from the URL
 	Host = url.split("/")[2]
-	print ga.green+" [!] Host: " + str(Host) +ga.end
-	print ga.green+" [!] WebServer: " + str(Server) +ga.end
-	for item in opener.headers.items():
+	print(ga.green+" [!] Host: " + str(Host) +ga.end)
+	print(ga.green+" [!] WebServer: " + str(Server) +ga.end)
+	for item in list(opener.headers.items()):
 	    for powered in item:
 		sig = "x-powered-by"		
 		if sig in item:
-		    print ga.green+ " [!] " + str(powered).strip() + ga.end
+		    print(ga.green+ " [!] " + str(powered).strip() + ga.end)
