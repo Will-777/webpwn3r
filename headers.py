@@ -16,6 +16,7 @@ class colors:
         self.yellow = "\033[93m"
         self.red = "\033[91m"
         self.end = "\033[0m"
+
 ga = colors()
 
 class UserAgent(FancyURLopener):
@@ -33,18 +34,22 @@ def headers_reader(url):
     opener = urllib.request.urlopen(url)
     if opener.code == 200:
         print(ga.green+" [!] Status code: 200 OK"+ga.end)
-	if opener.code == 404:
-	    print(ga.red+" [!] Page was not found! Please check the URL \n"+ga.end)
-	    exit()
+        if opener.code == 404:
+            print(ga.red+" [!] Page was not found! Please check the URL \n"+ga.end)
+            exit()
 
         #Host = opener.headers.get(HTTP_HEADER.HOST)
-	Server = opener.headers.get(HTTP_HEADER.SERVER)
+        Server = opener.headers.get(HTTP_HEADER.SERVER)
 	# HOST will split the HostName from the URL
-	Host = url.split("/")[2]
-	print(ga.green+" [!] Host: " + str(Host) +ga.end)
-	print(ga.green+" [!] WebServer: " + str(Server) +ga.end)
-	for item in list(opener.headers.items()):
-	    for powered in item:
-		sig = "x-powered-by"		
-		if sig in item:
-		    print(ga.green+ " [!] " + str(powered).strip() + ga.end)
+        Host = url.split("/")[2]
+        print(ga.green+" [!] Host: " + str(Host) +ga.end)
+        print(ga.green+" [!] WebServer: " + str(Server) +ga.end)
+
+        for item in list(opener.headers.items()):
+            for powered in item:
+                sig = "x-powered-by"
+                if sig in item:
+                    print(ga.green+ " [!] " + str(powered).strip() + ga.end)
+
+
+
