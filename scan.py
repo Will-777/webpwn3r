@@ -9,6 +9,9 @@ import urllib.request, urllib.parse, urllib.error
 from headers import *
 from vulnz import *
 
+from colorama import init
+init()
+
 print(ga.green+'''
 	    __          __  _     _____                 ____       
 	    \ \        / / | |   |  __ \               |___ \      
@@ -27,8 +30,10 @@ print(ga.green+'''
         ##############################################################
         '''+ga.end)
 
+loopMenu = True
+
 def urls_or_list():
-    url_or_list = input(" [!] Scan URL or List of URLs? [1/2]: ")
+    url_or_list = input(" [!] type [1] to Scan URL, [2] for List of URLs or [E] to Exit : ")
     
     if url_or_list == "1":
         url = input(" [!] Enter the URL: ")
@@ -42,28 +47,40 @@ def urls_or_list():
             xss_func(url)
             error_based_sqli_func(url)
         else:
-            print(ga.red +"\n [Warning] "+ ga.end + ga.bold+"%s"%url +ga.end + ga.red +" is not a valid URL"+ga.end)
-            print(ga.red +" [Warning] You should write a Full URL .e.g http://site.com/page.php?id=value \n"+ ga.end)
+            print(ga.red +"\n [Warning] "+ ga.end + ga.bold+"%s"%url +ga.end + ga.red +" is not a valid URL" + ga.end)
+            print(ga.red +" [Warning] You should write a Full URL .e.g http://site.com/page.php?id=value \n" + ga.end)
             exit()
 
-        if url_or_list =="2":
-            urls_list = input( ga.green+" [!] Enter the list file name .e.g [list.txt]: "+ga.end)
-            open_list = open(urls_list).readlines()
+    elif url_or_list =="2":
+        urls_list = input( ga.green + " [!] Enter the list file name .e.g [list.txt]: " + ga.end)
+        open_list = open(urls_list).readlines()
 
-            for line in open_list:
-                if "?" in line:
-                    links = line.strip()
-                    url = links
-                    print(ga.green+" \n [!] Now Scanning %s"%url +ga.end)
-                    rce_func(url)
-                    xss_func(url)
-                    error_based_sqli_func(url)
-                else:
-                    links = line.strip()
-                    url = links
-                    print(ga.red +"\n [Warning] "+ ga.end + ga.bold+"%s"%url +ga.end + ga.red +" is not a valid URL"+ga.end)
-                    print(ga.red +" [Warning] You should write a Full URL .e.g http://site.com/page.php?id=value \n"+ ga.end)
-                    exit()				
+        for line in open_list:
+            if "?" in line:
+                links = line.strip()
+                url = links
+                print(ga.green+" \n [!] Now Scanning %s"%url +ga.end)
+                rce_func(url)
+                xss_func(url)
+                error_based_sqli_func(url)
+            else:
+                links = line.strip()
+                url = links
+                print(ga.red + "\n [Warning] "+ ga.end + ga.bold + "%s" %url + ga.end + ga.red +" is not a valid URL" + ga.end)
+                print(ga.red + " [Warning] You should write a Full URL .e.g http://site.com/page.php?id=value \n" + ga.end)
+        exit()
 
-urls_or_list()
+    elif url_or_list == "E" or url_or_list == "e":
+        print(ga.green + "[V] Scan down. thank you. Bye." + ga.end)
+        loopMenu = False
+        return (loopMenu)
+        
+
+    else:
+        print(ga.red + "Sorry, this command doesn't exist." + ga.end)
+        
+
+#while loopMenu :
+while urls_or_list() :
+    print(loopMenu)
 
