@@ -78,15 +78,13 @@ def urls_or_list():
 
     elif url_or_list == "E" or url_or_list == "e":
         print(ga.green + "[V] Scan down. thank you. Bye." + ga.end)
-        loopMenu = False
-        return (loopMenu)
+        exit()
         
 
     else:
         print(ga.red + "Sorry, this command doesn't exist." + ga.end)
         
 
-#while loopMenu :
-while urls_or_list() :
-    print(loopMenu)
+while loopMenu :
+    urls_or_list()
 
