@@ -9,8 +9,14 @@ import urllib.request, urllib.parse, urllib.error
 from headers import *
 from vulnz import *
 
-from colorama import init
-init()
+# to display colors under windows
+import os
+if os.name == 'nt':
+    try :
+        from colorama import init
+        init()
+    except ModuleNotFoundError :
+        print("The library colorama is required for windows. Type pip install colorama.")
 
 print(ga.green+'''
 	    __          __  _     _____                 ____       
